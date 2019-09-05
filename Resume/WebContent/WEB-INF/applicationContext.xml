@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx" 
+        xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+    <!-- 注入依赖 -->   	
+    <bean id="adminService" class="com.resume.service.impl.AdminServiceImpl">
+    	<property name="adminDao" ref="adminDao"></property>
+    </bean>
+    
+    <bean id="adminDao" class="com.resume.dao.impl.AdminDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+   	<bean id="employeeService" class="com.resume.service.impl.EmployeeServiceImpl">
+   	<property name="empDao" ref="EmpDao"></property>
+   	</bean>
+   	
+   	<bean id="EmpDao" class="com.resume.dao.impl.EmployeeDaoImpl">
+   	<property name="sessionFactory" ref="sessionFactory"></property>
+   	</bean>
+   	
+   	<bean id="deptService" class="com.resume.service.impl.DeptServiceImpl">
+   	<property name="deptDao" ref="deptDao"></property>
+   	</bean>
+   	
+   	<bean id="deptDao" class="com.resume.dao.impl.DeptDaoImpl">
+   	<property name="sessionFactory" ref="sessionFactory"></property>
+   	</bean>
+   	   	
+   	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+   		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+   	</bean>
+   	
+   	
+   <!--配置事务管理器 -->
+   	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+   		<property name="sessionFactory" ref="sessionFactory"></property>
+   	</bean>
+   	
+   	<!-- 配置事务的通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" read-only="false"/>
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.resume.service.impl.*.*(..))" id="pt1"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pt1"/>
+	</aop:config>
+</beans>

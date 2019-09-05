@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+    <!-- 实体类映射配置 -->
+    <hibernate-mapping package="com.resume.po">
+    	<class name="Admin" table="admin">
+    		<!-- 主键配置 -->
+    		<id name="adminId" column="id">
+    			<generator class="native"></generator>
+    		</id>
+    		
+    		<!-- 非主键配置 -->
+    		<property name="adminName" column="name"></property>
+    		<property name="adminPwd" column="pwd"></property>
+    	</class>
+    </hibernate-mapping>

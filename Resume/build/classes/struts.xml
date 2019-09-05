@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+	<struts>
+		<package name="p1" extends="struts-default">
+		
+			<!-- 自定义拦截器 -->
+			<interceptors>
+				<interceptor name="myInterceptor" class="com.resume.action.MyInterceptor"></interceptor>
+				<interceptor-stack name="mystack">
+					<interceptor-ref name="defaultStack"></interceptor-ref>
+					<interceptor-ref name="myInterceptor"></interceptor-ref>
+				</interceptor-stack>
+			</interceptors>
+			
+			<!-- 设置默认拦截器 -->
+			<default-interceptor-ref name="mystack"></default-interceptor-ref>
+			
+			
+			<!--配置全局视图 -->
+			<global-results>
+				<result name="login" type="dispatcher">/login.jsp</result>
+				<result name="success" type="dispatcher">/list.jsp</result>
+				<result name="list" type="dispatcher">/list.jsp</result>
+				<result name="addEmp" type="dispatcher">/addEmp.jsp</result>
+				<result name="updateEmp" type="dispatcher">/updateEmp.jsp</result>
+				<result name="index" type="dispatcher">/index.jsp</result>
+			</global-results>
+			
+			<!-- 配置动作类 -->
+			<action name="List" class="com.resume.action.EmpAction" method="showList"></action>
+			<action name="Query" class="com.resume.action.EmpAction" method="queryByName"></action>
+			<action name="AddEmp" class="com.resume.action.EmpAction" method="addEmp"></action>
+			<action name="UpdateEmp" class="com.resume.action.EmpAction" method="updateEmp"></action>
+			<action name="DeleteEmp" class="com.resume.action.EmpAction" method="deleteEmp"></action>
+			<action name="SaveEmp" class="com.resume.action.EmpAction" method="saveEmp"></action>
+			<action name="UpdateEmpData" class="com.resume.action.EmpAction" method="updateEmpData"></action>
+			
+			<action name="Login" class="com.resume.action.AdminAction" method="login"></action>
+			<action name="Register" class="com.resume.action.AdminAction" method="register"></action>
+			<action name="Checkout" class="com.resume.action.AdminAction" method="cheakout"></action>
+		</package>
+	</struts>

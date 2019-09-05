@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<!-- 第一部分，数据库的主要配置 -->
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://192.168.220.128:3306/ssh?useUnicode=true&amp;characterEncoding=UTF-8</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">123456</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		
+	<!-- 第二部分，数据库的可选配置 -->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</property>
+		
+	<!-- 第三部分，配置映射表的位置 -->
+		<mapping resource="com/resume/po/admin.hbm.xml"/>	
+		<mapping resource="com/resume/po/dept.hbm.xml"/>	
+		<mapping resource="com/resume/po/employee.hbm.xml"/>	
+	</session-factory>
+</hibernate-configuration>
